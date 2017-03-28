@@ -69,11 +69,10 @@ class ArgumentSelector(QWidget):
     def select_argument(self):
         """Extract data in the selected cells and add arguments to sys.arg"""
         indexes = self.table.selectionModel().selectedRows()
-        for i, index in enumerate(sorted(indexes)):
+        for i, index in enumerate(indexes):
             row = index.row()
             rowtext = []
             for column in range(self.table.columnCount()):
                 rowtext.append(self.table.item(row, column).text())
                 sys.argv.append(rowtext[0])
         self.close()
-
