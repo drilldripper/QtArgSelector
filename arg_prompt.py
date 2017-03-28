@@ -4,37 +4,39 @@ import sys
 import os
 import fnmatch
 
-from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout,QFileDialog, QApplication,
-                             QTableWidget, QComboBox, QTableWidgetItem)
+from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QFileDialog,
+                             QLabel, QTableWidget, QComboBox, QTableWidgetItem)
 
 
 class ArgumentSelector(QWidget):
     def __init__(self):
         super().__init__()
-
         self.init_ui()
 
     def init_ui(self):
         self.file_button = QPushButton("Open Directory")
         self.file_button.clicked.connect(self.enumerate_files)
 
-        self.cell_button = QPushButton("Selected Rows")
+        self.cell_button = QPushButton("Select Items")
         self.cell_button.clicked.connect(self.select_argument)
 
-        # Select extension.
+        # Select extensions
+        self.extention_label = QLabel("Extension")
         self.combo = QComboBox(self)
         self.combo.addItem("*")
         self.combo.addItem("png")
         self.combo.addItem("jpg")
         self.combo.addItem("bmp")
+        self.combo.addItem("txt")
 
-        # setTable
+
+        # Set Table
         self.table = QTableWidget()
         self.tableItem = QTableWidgetItem()
         self.table.setRowCount(0)
         self.table.setColumnCount(1)
 
-        # stretch cell option
+        # stretch table option
         self.table.horizontalHeader().setStretchLastSection(True)
 
         # cell name
@@ -42,16 +44,17 @@ class ArgumentSelector(QWidget):
 
         grid = QGridLayout()
         self.setLayout(grid)
-        grid.addWidget(self.file_button, 0, 1)
-        grid.addWidget(self.cell_button, 0, 2)
+        grid.addWidget(self.file_button, 0, 0)
         grid.addWidget(self.combo, 0, 3)
+        grid.addWidget(self.extention_label, 0, 2)
         grid.addWidget(self.table, 1, 0, 1, 4)
-
+        grid.addWidget(self.cell_button, 2, 3)
         self.setGeometry(300, 300, 350, 300)
         self.setWindowTitle('File dialog')
         self.show()
 
     def enumerate_files(self):
+        """Set selected files in the table"""
         directory = QFileDialog.getExistingDirectory(self, 'Open directory', '/home')
         files = os.listdir(directory)
 
@@ -64,7 +67,7 @@ class ArgumentSelector(QWidget):
             self.table.setItem(0, i, QTableWidgetItem(file))
 
     def select_argument(self):
-        # select selected text by index
+        """Extract data in the selected cells and add arguments to sys.arg"""
         indexes = self.table.selectionModel().selectedRows()
         for i, index in enumerate(sorted(indexes)):
             row = index.row()
@@ -72,11 +75,5 @@ class ArgumentSelector(QWidget):
             for column in range(self.table.columnCount()):
                 rowtext.append(self.table.item(row, column).text())
                 sys.argv.append(rowtext[0])
-            self.arg.append(rowtext)
         self.close()
 
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    argument_selector = ArgumentSelector()
-    sys.exit(app.exec_())
