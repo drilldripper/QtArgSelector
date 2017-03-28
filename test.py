@@ -1,4 +1,4 @@
-from arg_prompt import ArgumentSelector
+from argument_selector import ArgumentSelector
 from PyQt5.QtWidgets import (QApplication)
 import sys
 
