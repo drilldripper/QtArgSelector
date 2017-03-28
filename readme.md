@@ -11,7 +11,7 @@ Let's launch a Program.
 
 ![StartView](readme_resource/StartView.png)
 
-Click _Open Direcory_ Button.
+Click `Open Direcory` Button.
 
 ![OpenDirectory](readme_resource/OpenDirectory.png)
 
@@ -19,23 +19,28 @@ You can see files in selected directory.
 
 ![AllFiles](readme_resource/AllFiles.png)
 
-When you select _Extension_ box, files can be filtered by file extension.
+When you select `Extension`, files can be filtered by file extension.
 
 ![FilteredFiles](readme_resource/FilteredFiles.png)
 
-Select cells and click _Select Items_. This Program is closed and your scripts will start.At that time, selected data has been added to the _sys.argv_
+Select cells and click `Select Items`. This Program is closed and your scripts will start.At that time, selected data has been added to the `sys.argv`
 
 ![SelectedFiles](readme_resource/SelectedFiles.png)
 
-### In sys.argv
-	['/Users/ryo/Repositories/QtArgumentSelector/test.py', 'Chino.png', 'Cocoa.png']
+### Note
+Output Arguments follow the cell selection order.
+
+For exsample, If you select "Cocoa.png" followed by "Chino.png", `sys.argv` are below.
+
+	['/Users/drilldripper/Repositories/QtArgumentSelector/test.py', 'Cocoa.png', 'Chinp.png']
+
 
 
 ## Installation
 	$git clone https://github.com/drilldripper/QtArgumentSelector.git
 	
 	
-or copy _argument_selector.py_ to your project.
+or copy `argument_selector.py` to your project.
 
 
 
