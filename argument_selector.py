@@ -56,7 +56,12 @@ class ArgumentSelector(QWidget):
     def enumerate_files(self):
         """Set selected files in the table"""
         directory = QFileDialog.getExistingDirectory(self, 'Open directory', '/home')
-        files = os.listdir(directory)
+        try:
+            files = os.listdir(directory)
+
+        except (FileNotFoundError, TypeError):
+            # print("You don't select directory.")
+            return
 
         # filter files with file extension
         files = [f for f in files if fnmatch.fnmatch(f, "*." + self.combo.currentText())]
