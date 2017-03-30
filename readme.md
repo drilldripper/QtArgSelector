@@ -32,7 +32,7 @@ Output Arguments follow the cell selection order.
 
 For exsample, If you select "Cocoa.png" followed by "Chino.png", `sys.argv` are below.
 
-	['/Users/drilldripper/Repositories/QtArgumentSelector/test.py', 'Cocoa.png', 'Chinp.png']
+	['/Users/drilldripper/Repositories/QtArgumentSelector/test.py', 'Cocoa.png', 'Chino.png']
 
 
 
