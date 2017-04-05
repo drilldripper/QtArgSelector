@@ -4,24 +4,23 @@ import sys
 import os
 import fnmatch
 
-from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QFileDialog,
+from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QFileDialog, QLineEdit,QTextEdit,
                              QLabel, QTableWidget, QComboBox, QTableWidgetItem)
 
 
 class ArgumentSelector(QWidget):
     def __init__(self):
         super().__init__()
-        self.init_ui()
 
-    def init_ui(self):
+        self.directory_path = '/home'
         self.file_button = QPushButton("Open Directory")
         self.file_button.clicked.connect(self.enumerate_files)
 
-        self.cell_button = QPushButton("Select Items")
+        self.cell_button = QPushButton("OK")
         self.cell_button.clicked.connect(self.select_argument)
 
         # Select extensions
-        self.extention_label = QLabel("Extension")
+        self.extension_label = QLabel("Extension")
         self.combo = QComboBox(self)
         self.combo.addItem("*")
         self.combo.addItem("png")
@@ -32,38 +31,54 @@ class ArgumentSelector(QWidget):
 
         # Set Table
         self.table = QTableWidget()
-        self.tableItem = QTableWidgetItem()
+        self.table_item = QTableWidgetItem()
         self.table.setRowCount(0)
         self.table.setColumnCount(1)
+        self.table.itemSelectionChanged.connect(self.add_argument)
 
-        # stretch table option
+        # Stretch table option
         self.table.horizontalHeader().setStretchLastSection(True)
 
-        # cell name
+        # Cell name
         self.table.setHorizontalHeaderLabels(["FileList"])
+        self.textbox = QTextEdit(self)
 
-        grid = QGridLayout()
-        self.setLayout(grid)
-        grid.addWidget(self.file_button, 0, 0)
-        grid.addWidget(self.combo, 0, 3)
-        grid.addWidget(self.extention_label, 0, 2)
-        grid.addWidget(self.table, 1, 0, 1, 4)
-        grid.addWidget(self.cell_button, 2, 3)
+        self.grid = QGridLayout()
+        self.setLayout(self.grid)
+        self.grid.addWidget(self.file_button, 0, 0)
+        self.grid.addWidget(self.combo, 0, 3)
+        self.grid.addWidget(self.extension_label, 0, 2)
+        self.grid.addWidget(self.table, 1, 0, 1, 4)
+        self.grid.addWidget(self.cell_button, 6, 3)
+        self.grid.addWidget(self.textbox, 3, 0, 3, 4)
         self.setGeometry(300, 300, 350, 300)
         self.setWindowTitle('File dialog')
         self.show()
 
-    def enumerate_files(self):
-        """Set selected files in the table"""
-        directory = QFileDialog.getExistingDirectory(self, 'Open directory', '/home')
+        # Read argument history file.
         try:
-            files = os.listdir(directory)
+            with open('.arg_history', 'r') as f:
+                for row in f:
+                    row = row.rstrip()
+                    self.textbox.append(row)
+        except FileNotFoundError:
+            # print("There isn't a  argument history.")
+            pass
+
+
+    def enumerate_files(self):
+        """
+        Set selected files in the table
+        """
+        self.directory_path = QFileDialog.getExistingDirectory(self, 'Open directory', '/home')
+        try:
+            files = os.listdir(self.directory_path)
 
         except (FileNotFoundError, TypeError):
             # print("You don't select directory.")
             return
 
-        # filter files with file extension
+        # Filter files with file extension
         files = [f for f in files if fnmatch.fnmatch(f, "*." + self.combo.currentText())]
         self.table.setRowCount(len(files))
         self.table.setColumnCount(1)
@@ -71,13 +86,27 @@ class ArgumentSelector(QWidget):
         for i, file in enumerate(files):
             self.table.setItem(0, i, QTableWidgetItem(file))
 
+
+
     def select_argument(self):
-        """Extract data in the selected cells and add arguments to sys.arg"""
-        indexes = self.table.selectionModel().selectedRows()
-        for i, index in enumerate(indexes):
-            row = index.row()
-            rowtext = []
-            for column in range(self.table.columnCount()):
-                rowtext.append(self.table.item(row, column).text())
-                sys.argv.append(rowtext[0])
+        """
+        Add Selected path and to sys.arg.
+        And create a argument history file.This file will be read when restarting a program.
+
+        """
+
+        path_text = self.textbox.toPlainText()
+        path_list = path_text.split("\n")
+        for path in path_list:
+            sys.argv.append(path)
+
+        with open('.arg_history', 'w') as f:
+            f.write(path_text)
         self.close()
+
+    def add_argument(self):
+        """
+        Add selected file path to text box.
+        """
+        items = self.table.selectedItems()
+        self.textbox.append(self.directory_path + "/" + items[0].text())
