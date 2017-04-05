@@ -7,7 +7,7 @@ This Program can work in Windows/Linux/MacOS.
 
 
 ## Demo
-Let's launch a Program.
+Let's start a Program.
 
 ![StartView](readme_resource/StartView.png)
 
@@ -15,26 +15,24 @@ Click `Open Direcory` Button.
 
 ![OpenDirectory](readme_resource/OpenDirectory.png)
 
-You can see files in selected directory.
+Selected directory files is viewed.
 
-![AllFiles](readme_resource/AllFiles.png)
-
-When you select `Extension`, files can be filtered by file extension.
-
-![FilteredFiles](readme_resource/FilteredFiles.png)
-
-Select cells and click `Select Items`. This Program is closed and your scripts will start.At that time, selected data has been added to the `sys.argv`
-
-![SelectedFiles](readme_resource/SelectedFiles.png)
-
-### Note
-Output Arguments follow the cell selection order.
-
-For exsample, If you select "Cocoa.png" followed by "Chino.png", `sys.argv` are below.
-
-	['/Users/drilldripper/Repositories/QtArgumentSelector/test.py', 'Cocoa.png', 'Chino.png']
+![AllFiles](readme_resource/SelectedFiles.png)
 
 
+Select cells and add to Argument list.
+
+![SelectedFiles](readme_resource/SelectCells.png)
+
+If you want to remove argument list, you can click `Clear Arguments`
+
+
+Click `OK`.Then this program is closed and your program will start. And selected argument is added to `sys.argv`.
+
+
+
+Also,when you will restat this program, argument history is selected.So you can rapidly test your program.
+![SelectedFiles](readme_resource/Restart.png)
 
 ## Installation
 	$git clone https://github.com/drilldripper/QtArgumentSelector.git
