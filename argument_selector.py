@@ -4,7 +4,7 @@ import sys
 import os
 import fnmatch
 
-from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QFileDialog, QLineEdit,QTextEdit,
+from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QFileDialog, QTextEdit,
                              QLabel, QTableWidget, QComboBox, QTableWidgetItem)
 
 
@@ -18,16 +18,6 @@ class ArgumentSelector(QWidget):
 
         self.cell_button = QPushButton("OK")
         self.cell_button.clicked.connect(self.select_argument)
-
-        # Select extensions
-        self.extension_label = QLabel("Extension")
-        self.combo = QComboBox(self)
-        self.combo.addItem("*")
-        self.combo.addItem("png")
-        self.combo.addItem("jpg")
-        self.combo.addItem("bmp")
-        self.combo.addItem("txt")
-
 
         # Set Table
         self.table = QTableWidget()
@@ -43,11 +33,10 @@ class ArgumentSelector(QWidget):
         self.table.setHorizontalHeaderLabels(["FileList"])
         self.textbox = QTextEdit(self)
 
+        # Layout Management
         self.grid = QGridLayout()
         self.setLayout(self.grid)
         self.grid.addWidget(self.file_button, 0, 0)
-        self.grid.addWidget(self.combo, 0, 3)
-        self.grid.addWidget(self.extension_label, 0, 2)
         self.grid.addWidget(self.table, 1, 0, 1, 4)
         self.grid.addWidget(self.cell_button, 6, 3)
         self.grid.addWidget(self.textbox, 3, 0, 3, 4)
@@ -78,8 +67,8 @@ class ArgumentSelector(QWidget):
             # print("You don't select directory.")
             return
 
-        # Filter files with file extension
-        files = [f for f in files if fnmatch.fnmatch(f, "*." + self.combo.currentText())]
+        # Ignore .file
+        files = [f for f in files if not fnmatch.fnmatch(f, ".*")]
         self.table.setRowCount(len(files))
         self.table.setColumnCount(1)
 
