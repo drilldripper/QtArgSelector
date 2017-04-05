@@ -4,7 +4,7 @@ import sys
 import os
 import fnmatch
 
-from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QFileDialog,
+from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QFileDialog, QLabel,
                              QTextEdit, QTableWidget, QTableWidgetItem)
 
 
@@ -21,6 +21,8 @@ class ArgumentSelector(QWidget):
 
         self.clear_button = QPushButton("Clear Arguments")
         self.clear_button.clicked.connect(self.clear_argument)
+
+        self.argument_label = QLabel('Argument list')
 
         # Set Table
         self.table = QTableWidget()
@@ -42,9 +44,10 @@ class ArgumentSelector(QWidget):
         self.grid.addWidget(self.file_button, 0, 0)
         self.grid.addWidget(self.clear_button, 0, 3)
         self.grid.addWidget(self.table, 1, 0, 1, 4)
-        self.grid.addWidget(self.textbox, 3, 0, 3, 4)
-        self.grid.addWidget(self.cell_button, 6, 3)
-        self.setGeometry(300, 300, 350, 300)
+        self.grid.addWidget(self.argument_label, 5, 0, 5, 4)
+
+        self.grid.addWidget(self.textbox, 10, 0, 10, 4)
+        self.grid.addWidget(self.cell_button, 20, 3)
         self.setWindowTitle('File dialog')
         self.show()
 
@@ -72,6 +75,7 @@ class ArgumentSelector(QWidget):
 
         # Ignore .files
         files = [f for f in files if not fnmatch.fnmatch(f, ".*")]
+
         self.table.setRowCount(len(files))
         self.table.setColumnCount(1)
 
