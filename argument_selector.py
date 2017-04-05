@@ -4,8 +4,8 @@ import sys
 import os
 import fnmatch
 
-from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QFileDialog, QTextEdit,
-                             QLabel, QTableWidget, QComboBox, QTableWidgetItem)
+from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QFileDialog,
+                             QTextEdit, QTableWidget, QTableWidgetItem)
 
 
 class ArgumentSelector(QWidget):
@@ -18,6 +18,9 @@ class ArgumentSelector(QWidget):
 
         self.cell_button = QPushButton("OK")
         self.cell_button.clicked.connect(self.select_argument)
+
+        self.clear_button = QPushButton("Clear Arguments")
+        self.clear_button.clicked.connect(self.clear_argument)
 
         # Set Table
         self.table = QTableWidget()
@@ -37,9 +40,10 @@ class ArgumentSelector(QWidget):
         self.grid = QGridLayout()
         self.setLayout(self.grid)
         self.grid.addWidget(self.file_button, 0, 0)
+        self.grid.addWidget(self.clear_button, 0, 3)
         self.grid.addWidget(self.table, 1, 0, 1, 4)
-        self.grid.addWidget(self.cell_button, 6, 3)
         self.grid.addWidget(self.textbox, 3, 0, 3, 4)
+        self.grid.addWidget(self.cell_button, 6, 3)
         self.setGeometry(300, 300, 350, 300)
         self.setWindowTitle('File dialog')
         self.show()
@@ -54,7 +58,6 @@ class ArgumentSelector(QWidget):
             # print("There isn't a  argument history.")
             pass
 
-
     def enumerate_files(self):
         """
         Set selected files in the table
@@ -67,15 +70,13 @@ class ArgumentSelector(QWidget):
             # print("You don't select directory.")
             return
 
-        # Ignore .file
+        # Ignore .files
         files = [f for f in files if not fnmatch.fnmatch(f, ".*")]
         self.table.setRowCount(len(files))
         self.table.setColumnCount(1)
 
         for i, file in enumerate(files):
             self.table.setItem(0, i, QTableWidgetItem(file))
-
-
 
     def select_argument(self):
         """
@@ -92,6 +93,15 @@ class ArgumentSelector(QWidget):
         with open('.arg_history', 'w') as f:
             f.write(path_text)
         self.close()
+
+    def clear_argument(self):
+        """
+        Clear text box.
+
+        """
+        self.textbox.clear()
+
+
 
     def add_argument(self):
         """
