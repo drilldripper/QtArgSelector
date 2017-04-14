@@ -1,7 +1,6 @@
-from argument_selector import ArgumentSelector
 import sys
+from qtargs import QtArgSelector
 
-if __name__ == '__main__':
-    ArgumentSelector()
-    print(sys.argv) # Check Arguments
+QtArgSelector.ShowArgumentSelector()
+print(sys.argv) #check arguments
 

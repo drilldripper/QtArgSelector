@@ -112,8 +112,10 @@ class ArgumentSelector(QWidget):
         items = self.table.selectedItems()
         self.textbox.append(self.directory_path + "/" + items[0].text())
 
-# Execution
-app = QApplication(sys.argv)
-argument_selector = ArgumentSelector()
-app.exec_()
 
+class ShowArgumentSelector(object):
+    def __init__(self):
+        # Execution
+        app = QApplication(sys.argv)
+        arg = ArgumentSelector()
+        app.exec_()
