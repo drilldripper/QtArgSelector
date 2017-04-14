@@ -35,42 +35,23 @@ Also,when you will restat this program, argument history is selected.So you can 
 ![SelectedFiles](readme_resource/Restart.png)
 
 ## Installation
-	$git clone https://github.com/drilldripper/QtArgumentSelector.git
-	
-	
-or copy `argument_selector.py` to your project.
-
+	$pip install QtArgSelector
 
 
 ## Usage
-Add this script to leading of the file.
-
 ```python
-from argument_selector import ArgumentSelector
-from PyQt5.QtWidgets import (QApplication)
 import sys
+from qtargs import QtArgSelector
 
-# Launch PyQt Application
-app = QApplication(sys.argv)
-# Instantiate GUI
-ex = ArgumentSelector()
-app.exec_()
 
-```
-
-GUI will launch.
-
-I recommend to check the _sys.argv_.
-
-```python
-# Check Arguments
-print(sys.argv)
+QtArgSelector.ShowArgumentSelector() # Launch GUI
+dprint(sys.argv) # Check Arguments
 
 ```
 
 
 ## Requirement
-- Python 3
+- Python 3 or above
 - PyQt 5
 
 
