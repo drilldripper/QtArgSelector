@@ -4,8 +4,8 @@ import sys
 import os
 import fnmatch
 
-from PyQt5.QtWidgets import (QWidget, QPushButton, QGridLayout, QFileDialog, QLabel,
-                             QTextEdit, QTableWidget, QTableWidgetItem)
+from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QGridLayout, QFileDialog,
+                             QLabel, QTextEdit, QTableWidget, QTableWidgetItem)
 
 
 class ArgumentSelector(QWidget):
@@ -105,11 +105,15 @@ class ArgumentSelector(QWidget):
         """
         self.textbox.clear()
 
-
-
     def add_argument(self):
         """
         Add selected file path to text box.
         """
         items = self.table.selectedItems()
         self.textbox.append(self.directory_path + "/" + items[0].text())
+
+# Execution
+app = QApplication(sys.argv)
+argument_selector = ArgumentSelector()
+app.exec_()
+
