@@ -1,7 +1,7 @@
-QtArgumentSelector
+QtArgSelector
 ===
 
-QtArgumentSelector is a simple GUI arguments selector for Python. 
+QtArgSelector is a simple GUI arguments selector for Python. 
 
 This Program can work in Windows/Linux/MacOS.
 
