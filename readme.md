@@ -45,7 +45,7 @@ from qtargs import QtArgSelector
 
 
 QtArgSelector.ShowArgumentSelector() # Launch GUI
-dprint(sys.argv) # Check Arguments
+print(sys.argv) # Check Arguments
 
 ```
 
