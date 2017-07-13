@@ -15,7 +15,7 @@ Click `Open Direcory` Button.
 
 ![OpenDirectory](readme_resource/OpenDirectory.png)
 
-Selected directory files is viewed.
+Selected directory files is displayed.
 
 ![AllFiles](readme_resource/SelectedFiles.png)
 
@@ -31,7 +31,7 @@ Click `OK`.Then this program is closed and your program will start. And selected
 
 
 
-Also,when you will restat this program, argument history is selected.So you can rapidly test your program.
+Also,when you will restat this program, argument history was selected.So you can rapidly exec your program.
 ![SelectedFiles](readme_resource/Restart.png)
 
 ## Installation
