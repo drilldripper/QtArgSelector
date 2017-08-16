@@ -35,7 +35,9 @@ Also,when you will restat this program, argument history was selected.So you can
 ![SelectedFiles](readme_resource/Restart.png)
 
 ## Installation
-	$pip install QtArgSelector
+Clone this repository and install it.
+
+	$ python setup.py install
 
 
 ## Usage
