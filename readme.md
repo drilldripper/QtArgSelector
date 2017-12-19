@@ -34,10 +34,12 @@ Click `OK`.Then this program is closed and your program will start. And selected
 Also,when you will restat this program, argument history was selected.So you can rapidly exec your program.
 ![SelectedFiles](readme_resource/Restart.png)
 
-## Installation
-Clone this repository and install it.
-
-	$ python setup.py install
+## How to install?
+```bash
+git clone https://github.com/drilldripper/QtArgSelector.git
+cd QtArgSelector 
+python setup.py install
+```
 
 
 ## Usage
